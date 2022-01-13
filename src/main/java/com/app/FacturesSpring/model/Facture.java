@@ -11,11 +11,12 @@ public class Facture {
 
     private Long id;
 
+    private TypeFacture typeFacture;
     private float montant;
     private String reference;
     private LocalDate dateEmise;
     private LocalDate dateEncaissee;
-    private final StatusFacture statusFacture = StatusFacture.NOT_PAID;
+    private StatusFacture statusFacture;
     private String nature;
 
     @ManyToOne
@@ -35,6 +36,10 @@ public class Facture {
     public Facture() {
     }
 
+    public Facture(String reference) {
+        this.reference = reference;
+    }
+
     public Long getId() {
         return id;
     }
@@ -43,6 +48,21 @@ public class Facture {
         this.id = id;
     }
 
+    public TypeFacture getTypeFacture() {
+        return typeFacture;
+    }
+
+    public void setTypeFacture(TypeFacture typeFacture) {
+        this.typeFacture = typeFacture;
+    }
+
+    public StatusFacture getStatusFacture() {
+        return statusFacture;
+    }
+
+    public void getStatusFacture(StatusFacture statusFacture) {
+        this.statusFacture = statusFacture;
+    }
 
     public float getMontant() {
         return montant;
@@ -74,10 +94,6 @@ public class Facture {
 
     public void setDateEncaissee(LocalDate dateEncaissee) {
         this.dateEncaissee = dateEncaissee;
-    }
-
-    public StatusFacture getTypeFacture() {
-        return statusFacture;
     }
 
     public String getNature() {

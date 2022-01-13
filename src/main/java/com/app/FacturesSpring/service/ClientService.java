@@ -1,6 +1,6 @@
 package com.app.FacturesSpring.service;
 
-import com.app.FacturesSpring.exception.ClientAlreadyExistException;
+import com.app.FacturesSpring.exception.client.ClientAlreadyExistException;
 import com.app.FacturesSpring.model.Client;
 import com.app.FacturesSpring.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class ClientService {
     ClientRepository clientRepository;
 
     public Client getClientByEmail(String email) throws ClientAlreadyExistException {
-        Optional<Client> optUser = clientRepository.getUserByEmail(email);
+        Optional<Client> optUser = clientRepository.getClientByEmail(email);
         if (!optUser.isPresent()) {
             Client user = new Client(email);
             return clientRepository.save(user);
@@ -31,5 +31,9 @@ public class ClientService {
 
     public Client getClientById(Long id) {
         return clientRepository.findUserById(id);
+    }
+
+    public Client createClient(Client client) {
+        return clientRepository.save(client);
     }
 }

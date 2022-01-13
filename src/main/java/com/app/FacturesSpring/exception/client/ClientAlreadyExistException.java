@@ -1,4 +1,4 @@
-package com.app.FacturesSpring.exception;
+package com.app.FacturesSpring.exception.client;
 
 public class ClientAlreadyExistException extends Exception {
     public ClientAlreadyExistException(String message, Throwable cause) {
