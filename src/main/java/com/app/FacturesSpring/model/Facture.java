@@ -18,18 +18,22 @@ public class Facture {
     private LocalDate dateEncaissee;
     private StatusFacture statusFacture;
     private String nature;
+    private MoyenPaiement moyenPaiement;
+    private Taxe taxe;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
 
-    public Facture(Long id, float montant, String reference, LocalDate dateEmise, LocalDate dateEncaissee, String nature, Client client) {
+    public Facture(Long id, float montant, String reference, LocalDate dateEmise, LocalDate dateEncaissee, String nature, MoyenPaiement moyenPaiement, Taxe taxe, Client client) {
         this.id = id;
         this.montant = montant;
         this.reference = reference;
         this.dateEmise = dateEmise;
         this.dateEncaissee = dateEncaissee;
         this.nature = nature;
+        this.moyenPaiement = moyenPaiement;
+        this.taxe = taxe;
         this.client = client;
     }
 
@@ -111,4 +115,21 @@ public class Facture {
     public void setClient(Client client) {
         this.client = client;
     }
+
+    public MoyenPaiement getMoyenPaiement() {
+        return moyenPaiement;
+    }
+
+    public void setMoyenPaiement(MoyenPaiement moyenPaiement) {
+        this.moyenPaiement = moyenPaiement;
+    }
+
+    public Taxe getTaxe() {
+        return taxe;
+    }
+
+    public void setTaxe(Taxe taxe) {
+        this.taxe = taxe;
+    }
 }
+

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajout d'une facture</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>Nouvelle facture</h1>
+<form th:action="@{/facture/factureForm}" th:object="${facture}" method="POST">
+    <p>Montant: <input type="number" th:field="${facture.montant}"></p>
+
+    <select id="taxe" th:field="*{taxe}">
+        <option th:each="taxe : ${taxes}" th:value="${taxe}" th:text="${taxe.getTaxe()} + ' %'"></option>
+    </select>
+
+    <p>Référence: <input type="text" th:field="${facture.reference}"></p>
+
+    <p>Nature: <input type="text" th:field="${facture.nature}"></p>
+
+    <select id="types" th:field="*{typeFacture}">
+        <option th:each="typefct : ${typeFactures}" th:value="${typefct}" th:text="${typefct.getType()}"></option>
+    </select>
+
+    <select id="paiement" th:field="*{moyenPaiement}">
+        <option th:each="moyenPaiement : ${moyenPaiements}" th:value="${moyenPaiement}"
+                th:text="${moyenPaiement.getMoyenPaiement()}"></option>
+    </select>
+
+    <select id="client" th:field="*{client}">
+        <option th:each="client : ${clientList}" th:value="${client.id}"
+                th:text="${client.firstname + client.lastname}"></option>
+    </select>
+
+    <p><input type="submit" value="ajouter"/></p>
+</form>
+</body>
+</html>

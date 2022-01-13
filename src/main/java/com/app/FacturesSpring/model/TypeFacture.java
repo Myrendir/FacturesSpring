@@ -1,9 +1,17 @@
 package com.app.FacturesSpring.model;
 
 public enum TypeFacture {
-    FORMATION("FORMATION"),
-    PRESTATION("PRESTATION");
+
+    FORMATION("Formation"),
+    PRESTATION("Prestation");
+
+    private final String type;
 
     TypeFacture(String s) {
+        this.type = s;
+    }
+
+    public String getType() {
+        return type;
     }
 }
