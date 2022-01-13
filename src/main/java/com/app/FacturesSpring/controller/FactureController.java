@@ -19,7 +19,7 @@ public class FactureController {
     @Autowired
     FactureService factureService;
 
-    @GetMapping("")
+    @GetMapping("/")
     public String getFactureById(@RequestParam(name = "id", required = false) Long id, ModelMap modelMap) {
         List<Facture> Factures = new ArrayList<Facture>();
         if (id != null) {
@@ -33,5 +33,7 @@ public class FactureController {
         modelMap.addAttribute("Factures", Factures);
         return "facture";
     }
+
+
 
 }
