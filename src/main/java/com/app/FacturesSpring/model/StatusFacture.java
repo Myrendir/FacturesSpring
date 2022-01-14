@@ -1,9 +1,16 @@
 package com.app.FacturesSpring.model;
 
 public enum StatusFacture {
-    PAID("PAID"),
-    NOT_PAID("NOT_PAID");
+    PAID("Payée"),
+    NOT_PAID("Non payée");
+
+    private final String status;
 
     StatusFacture(String s) {
+        this.status = s;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }

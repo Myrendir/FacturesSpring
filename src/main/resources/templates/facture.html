@@ -1,10 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Factures</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Emise</th>
+        <th scope="col">Status</th>
+        <th scope="col">Action</th>
+        <th scope="col">Nb de candidats</th>
+        <th scope="col">Encaissé</th>
+        <th scope="col">Référence</th>
+        <th scope="col">Client</th>
+        <th scope="col">Nature</th>
+        <th scope="col">HT</th>
+        <th scope="col">TVA</th>
+        <th scope="col">TVA Somme</th>
+        <th scope="col">TTC</th>
+        <th scope="col">Encaissement</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="facture, state: ${factures}">
+        <td th:utext="${facture.dateEmise}"></td>
+        <td th:utext="${facture.statusFacture.getStatus()}"></td>
+        <td th:utext="${facture.typeFacture.getType()}"></td>
+        <td th:utext="${facture.nbCandidats}"></td>
+        <td th:utext="${facture.dateEncaissee}"></td>
+        <td th:utext="${facture.reference}"></td>
+        <td th:utext="${client}"></td>
+        <td th:utext="${facture.nature}"></td>
+        <td th:utext="${facture.montant}"></td>
+        <td th:utext="${facture.taxe.getTaxe()} + ' %'"></td>
+        <td th:utext="${tvaSomme}"></td>
+        <td th:utext="${ttc}"></td>
+        <td th:utext="${facture.moyenPaiement.getMoyenPaiement()}"></td>
+    </tr>
+    </tbody>
+</table>
 
 </body>
 </html>

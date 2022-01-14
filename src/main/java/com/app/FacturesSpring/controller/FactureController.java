@@ -28,6 +28,7 @@ public class FactureController {
     @GetMapping("/")
     public String getFactureById(@RequestParam(name = "id", required = false) Long id, ModelMap modelMap) {
         List<Facture> Factures = new ArrayList<Facture>();
+
         if (id != null) {
             Facture Facture = factureService.getFactureById(id);
             Factures.add(Facture);
@@ -36,7 +37,23 @@ public class FactureController {
             Factures.addAll(list);
         }
 
-        modelMap.addAttribute("Factures", Factures);
+        String longNameClient = "";
+        double tvaSomme = 0;
+        double ttc = 0;
+        for (Facture facture : Factures) {
+
+            double tva = facture.getTaxe().getTaxe();
+            tvaSomme = (facture.getMontant() * (tva / 100));
+            ttc = (facture.getMontant() * (1 + (tva / 100)));
+
+            Client client = clientService.getClientById(facture.getClient().getId());
+            longNameClient = client.getFirstname() + " " + client.getLastname();
+        }
+
+        modelMap.addAttribute("ttc", ttc);
+        modelMap.addAttribute("tvaSomme", tvaSomme);
+        modelMap.addAttribute("client", longNameClient);
+        modelMap.addAttribute("factures", Factures);
         return "facture";
     }
 
@@ -46,20 +63,23 @@ public class FactureController {
         List<TypeFacture> typeFactures = Arrays.asList(TypeFacture.values());
         List<MoyenPaiement> moyenPaiements = Arrays.asList(MoyenPaiement.values());
         List<Taxe> taxes = Arrays.asList(Taxe.values());
+        List<StatusFacture> statusFactures = Arrays.asList(StatusFacture.values());
 
         model.addAttribute("facture", new Facture());
         model.addAttribute("clientList", clientList);
         model.addAttribute("typeFactures", typeFactures);
         model.addAttribute("moyenPaiements", moyenPaiements);
         model.addAttribute("taxes", taxes);
+        model.addAttribute("status", statusFactures);
 
-        System.out.println(clientList);
+        System.out.println(statusFactures);
 
         return "factureForm";
     }
 
     @PostMapping("/factureForm")
     public ResponseEntity<Facture> createFacture(@ModelAttribute Facture facture) {
+
         Facture newFacture = factureService.createFacture(facture);
         return new ResponseEntity<>(newFacture, HttpStatus.CREATED);
     }
