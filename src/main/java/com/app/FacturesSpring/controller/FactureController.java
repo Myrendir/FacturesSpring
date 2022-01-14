@@ -3,6 +3,7 @@ package com.app.FacturesSpring.controller;
 import com.app.FacturesSpring.model.*;
 import com.app.FacturesSpring.service.ClientService;
 import com.app.FacturesSpring.service.FactureService;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -37,10 +39,21 @@ public class FactureController {
             Factures.addAll(list);
         }
 
+        modelMap.addAttribute("factures", Factures);
+        return "facture";
+    }
+
+    @GetMapping("/{dateEmise}")
+    public String getFacturesByDate(@RequestParam(name = "dateEmise") String dateEmise, ModelMap modelMap) {
+        LocalDate date = LocalDate.parse(dateEmise);
+        LocalDate first = date.withDayOfMonth(1);
+        LocalDate last = first.plusMonths(1).minusDays(1);
+        List<Facture> factureList = factureService.findByDateEmise(first, last);
+
         String longNameClient = "";
         double tvaSomme = 0;
         double ttc = 0;
-        for (Facture facture : Factures) {
+        for (Facture facture : factureList) {
 
             double tva = facture.getTaxe().getTaxe();
             tvaSomme = (facture.getMontant() * (tva / 100));
@@ -53,7 +66,6 @@ public class FactureController {
         modelMap.addAttribute("ttc", ttc);
         modelMap.addAttribute("tvaSomme", tvaSomme);
         modelMap.addAttribute("client", longNameClient);
-        modelMap.addAttribute("factures", Factures);
         return "facture";
     }
 

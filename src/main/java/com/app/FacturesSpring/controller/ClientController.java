@@ -43,6 +43,7 @@ public class ClientController {
         return "clientForm";
     }
 
+
     @PostMapping("/clientForm")
     public ResponseEntity<Client> createClient(@ModelAttribute Client client) {
         Client newClient = clientService.createClient(client);

@@ -18,7 +18,7 @@ public class Facture {
 
     private String reference;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "git ")
     private LocalDate dateEmise;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
